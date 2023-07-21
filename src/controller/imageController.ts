@@ -15,7 +15,6 @@ const imageFunction = async (req: Request, res: Response) => {
   }
 
   const newName = `${filename}_${height}_${width}`;
-  console.log(newName + "ff");
 
   const imagePath = path.join(
     __dirname,
@@ -33,7 +32,7 @@ const imageFunction = async (req: Request, res: Response) => {
     await sharp(imagePath).resize(width, height).toFile(imagePath2);
     return res.sendFile(imagePath2);
   } else {
-    console.log("no");
+    return res.status(404).send("Image not found");
   }
 };
 
