@@ -1,20 +1,15 @@
-import countries from "../index";
+import app from "../index";
+import supertest from "supertest";
 
-it("should get basic data on the country canada", async () => {
-  const data = await countries.getCountry("canada");
-  expect(data).toEqual({
-    capital: "Ottawa",
-    region: "Americas",
-    numericCode: "124",
+const request = supertest(app);
+
+describe("Testing Endpoints", () => {
+  it("Testing if endpoint  exists", async () => {
+    await request
+      .get("/image?filename=benzema&&width=500&&height=500")
+      .expect(200);
   });
-});
-
-it("should get the countries in the region NAFTA", async () => {
-  const data = await countries.getRegionCountries("nafta");
-  expect(data).toEqual(["Ottawa", "Mexico City", "Washington, D.C."]);
-});
-
-it("should get capitals of NAFTA countries", async () => {
-  const data = await countries.getRegionCapitals("nafta");
-  expect(data).toEqual(["Ottawa", "Mexico City", "Washington, D.C."]);
+  it("Testing if endpoint dosent exist", async () => {
+    await request.get("/resize").expect(404);
+  });
 });
