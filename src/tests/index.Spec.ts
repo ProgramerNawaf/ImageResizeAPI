@@ -2,6 +2,7 @@ import app from '../index';
 import supertest from 'supertest';
 import sharp from 'sharp';
 import path from 'path';
+import { imageResize } from '../controller/imageController';
 
 const request = supertest(app);
 
@@ -15,9 +16,12 @@ describe('Testing Endpoints', () => {
     await request.get('/resize').expect(404);
   });
 
-  it('Testing if function with correct paths and parameters work', () => {
-    sharp(path.join(__dirname, '../../assets/full', `benzema.jpg`))
-      .resize(500, 500)
-      .toFile(path.join(__dirname, '../../assets/full', `benzema.jpg_500_500`));
+  it('Testing if imageResize function with correct paths and parameters work', () => {
+    imageResize(
+      path.join(__dirname, '../../assets/full', `benzema.jpg`),
+      path.join(__dirname, '../../assets/full', `benzema.jpg_500_500`),
+      500,
+      500,
+    );
   });
 });
